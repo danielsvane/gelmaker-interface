@@ -1,0 +1,22 @@
+#drawing {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #333;
+}
+
+.container {
+  display: flex;
+}
+
+#drawing {
+  order: 1;
+}
+
+#control {
+  background: #fff;
+  padding: 1rem;
+  order: 0;
+}
