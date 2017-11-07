@@ -1,5 +1,6 @@
 var SVG = require('svg.js');
 var socket = require('socket.io-client')();
+var $ = require('jquery');
 
 require("semantic-ui-css/semantic.min.css");
 require("./styles.css");
@@ -14,9 +15,20 @@ socket.on('connect', () => {
 });
 
 socket.on('update pressure', (pressure) => {
-  console.log(pressure);
   let newHeight = 97.5/1024*pressure;
   let newY = 97.5-newHeight;
   rect.animate().height(newHeight).attr('y', newY);
-  //rect.animate().attr('y', newY);
 });
+
+socket.on("dispense done", () => {
+  $("#dispense").html("Dispense");
+  $("#dispense").removeClass("disabled");
+})
+
+$("#dispense").on("click", () => {
+  $("#dispense").html("Dispensing");
+  $("#dispense").addClass("disabled");
+  let amount = $("#amount").val();
+  console.log(amount);
+  socket.emit("dispense start", amount);
+})
